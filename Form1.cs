@@ -1,9 +1,12 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace RuneChan
@@ -39,16 +42,27 @@ namespace RuneChan
         }
         public void Auth()
         {
-            System.Diagnostics.Process.Start("auth.bat");
-            System.Threading.Thread.Sleep(2000);
-            string[] arrLine = File.ReadAllLines("auth.txt");
-            string token = arrLine[0].Remove(arrLine[0].Length - 1);
-            port = arrLine[1].Remove(arrLine[1].Length - 1);
+            wmic();
+            Thread.Sleep(1000);
+            string sampo = File.ReadAllText("temp.txt");
+            Regex pattern1 = new Regex(@"remoting-auth-token=(.*?)""");
+            Match match1 = pattern1.Match(sampo);
+            Regex pattern2 = new Regex(@"--app-port=(.*?)""");
+            Match match2 = pattern2.Match(sampo);            
+            port = match2.Value.Substring(11,5);
+            string token = match1.Value.Substring(20).Replace("\"","");
             b64 = EncodeTo64("riot:" + token);
-            File.Delete("auth.txt");
+            //MessageBox.Show(port + token);
             File.Delete("temp.txt");
-            File.Delete("temp2.txt");
-            File.Delete("temp3.txt");
+        }
+        public void wmic() {
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.FileName = "cmd.exe";
+            startInfo.Arguments = "/C WMIC path win32_process get Caption,Commandline | find \"--remoting-auth-token=\" > temp.txt";
+            process.StartInfo = startInfo;
+            process.Start();
         }
         public string EncodeTo64(string toEncode)
         {
@@ -193,6 +207,7 @@ namespace RuneChan
             BuscaA(xamp);
             Del();
             Post();
+            this.WindowState = FormWindowState.Minimized;
         }
         private void button2_Click(object sender, EventArgs e)
         {
@@ -208,6 +223,7 @@ namespace RuneChan
             BuscaS(xamp);
             Del();
             Post();
+            this.WindowState = FormWindowState.Minimized;
         }
         private void button3_Click(object sender, EventArgs e)
         {
@@ -222,11 +238,13 @@ namespace RuneChan
         {
             BuscaA(887);
             Post();
+            this.WindowState = FormWindowState.Minimized;
         }
         private void button3_Click_1(object sender, EventArgs e)
         {
             BuscaA(666);
             Post();
+            this.WindowState = FormWindowState.Minimized;
         }
     }
 }
