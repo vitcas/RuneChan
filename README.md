@@ -1,4 +1,4 @@
-![](https://i.ibb.co/HrrtPJ0/output-onlinepngtools.png)
+![](https://i.ibb.co/bzW4txh/output-onlinepngtools.png)
 
 Fiz esse programa pois jogo com vários campeões e não gosto de perder tempo arrumando as runas. Sei que já existem programas que fazem isso, como Blitz, Porofessor e RuneChanger mas eles são bem pesados e não me interessam as outras funções. 
 ### Como usar
@@ -14,7 +14,7 @@ Não, o programa é bem simples e só faz requisições para a API da mesma form
 
 Existem vários sites que analisam os dados do jogo, com base em alguns deles fiz a runa mais popular para cada campeão. Levei em conta jogadores do elo Ouro para baixo, já que do Platina em diante teoricamente já deveria saber a runa adequada para o campeão.
 ### Download
-[Link 1](https://files.catbox.moe/ecwmdj.rar)
+[Link 1](https://files.catbox.moe/p6h95v.rar)
 
 [Link 2](https://www63.zippyshare.com/v/u6kltJrN/file.html)
 
