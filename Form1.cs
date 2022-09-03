@@ -36,6 +36,7 @@ namespace RuneChan
         public string acid;
         public List<Rune> runesAram;
         public List<Rune> runesSr;
+        public List<Rune> runesSpecial;
         public bool AcceptAllCertifications(object sender, System.Security.Cryptography.X509Certificates.X509Certificate certification, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors)
         {
             return true;
@@ -87,6 +88,14 @@ namespace RuneChan
                 var strContent = reader.ReadToEnd();
                 runesSr = JsonConvert.DeserializeObject<List<Rune>>(strContent);
             }
+            var webRequestd = WebRequest.Create(@"https://pastebin.com/raw/31c4gwb6");
+            using (var response = webRequestd.GetResponse())
+            using (var content = response.GetResponseStream())
+            using (var reader = new StreamReader(content))
+            {
+                var strContent = reader.ReadToEnd();
+                runesSpecial = JsonConvert.DeserializeObject<List<Rune>>(strContent);
+            }
             var webRequestc = WebRequest.Create(@"https://pastebin.com/raw/kcycDGYk");
             using (var response = webRequestc.GetResponse())
             using (var content = response.GetResponseStream())
@@ -111,6 +120,17 @@ namespace RuneChan
         public string BuscaS(int campeao)
         {
             foreach (var item in runesSr)
+            {
+                if (item.id == campeao)
+                {
+                    runa = JsonConvert.SerializeObject(item);
+                }
+            }
+            return runa.ToString();
+        }
+        public string BuscaSpe(int campeao)
+        {
+            foreach (var item in runesSpecial)
             {
                 if (item.id == campeao)
                 {
@@ -253,7 +273,10 @@ namespace RuneChan
 
         private void button3_Click_2(object sender, EventArgs e)
         {
-
+            BuscaSpe(1);
+            Del();
+            Post();
+            this.WindowState = FormWindowState.Minimized;
         }
     }
 }
