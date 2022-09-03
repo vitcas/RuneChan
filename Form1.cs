@@ -52,7 +52,6 @@ namespace RuneChan
             port = match2.Value.Substring(11,5);
             string token = match1.Value.Substring(20).Replace("\"","");
             b64 = EncodeTo64("riot:" + token);
-            //MessageBox.Show(port + token);
             File.Delete("temp.txt");
         }
         public void wmic() {
@@ -211,19 +210,7 @@ namespace RuneChan
         }
         private void button2_Click(object sender, EventArgs e)
         {
-            dynamic lobby = JsonConvert.DeserializeObject(Get("/lol-lobby-team-builder/champ-select/v1/session"));
-            foreach (dynamic player in lobby.myTeam)
-            {
-                if (player.summonerId == acid)
-                {
-                    xamp = player.championId;
-                    break;
-                }
-            }
-            BuscaS(xamp);
-            Del();
-            Post();
-            this.WindowState = FormWindowState.Minimized;
+            
         }
         private void button3_Click(object sender, EventArgs e)
         {
@@ -245,6 +232,28 @@ namespace RuneChan
             BuscaA(666);
             Post();
             this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            dynamic lobby = JsonConvert.DeserializeObject(Get("/lol-lobby-team-builder/champ-select/v1/session"));
+            foreach (dynamic player in lobby.myTeam)
+            {
+                if (player.summonerId == acid)
+                {
+                    xamp = player.championId;
+                    break;
+                }
+            }
+            BuscaS(xamp);
+            Del();
+            Post();
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void button3_Click_2(object sender, EventArgs e)
+        {
+
         }
     }
 }
